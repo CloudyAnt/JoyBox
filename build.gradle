@@ -25,4 +25,4 @@ test {
     useJUnitPlatform()
 }
 
-mainClassName = 'cn.itscloudy.JoyBox'
+mainClassName = 'cn.itscloudy.joybox.JoyBox'
