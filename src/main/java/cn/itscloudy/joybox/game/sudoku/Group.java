@@ -4,12 +4,18 @@ class Group {
 
     private final GroupRecord prepRecord;
     private final GroupRecord fillingRecord;
-
+    private final Cell[] cells = new Cell[9];
+    private int ci;
 
     Group() {
         prepRecord = new GroupRecord();
         fillingRecord = new GroupRecord();
     }
+
+    void addCell(Cell cell) {
+        cells[ci++] = cell;
+    }
+
     void reset() {
         prepRecord.reset();
         fillingRecord.reset();
@@ -21,5 +27,15 @@ class Group {
 
     GroupRecord getFillingRecord() {
         return fillingRecord;
+    }
+
+    void recalculateFillingRecord() {
+        fillingRecord.reset();
+        for (Cell cell : cells) {
+            CellValue displayingValue = cell.getDisplayingValue();
+            if (displayingValue != null) {
+                fillingRecord.addValue(displayingValue);
+            }
+        }
     }
 }

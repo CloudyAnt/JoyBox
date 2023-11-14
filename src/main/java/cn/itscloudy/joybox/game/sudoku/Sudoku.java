@@ -1,26 +1,33 @@
 package cn.itscloudy.joybox.game.sudoku;
 
-import javafx.scene.Scene;
+import cn.itscloudy.joybox.util.JoyBoxStuffVBox;
+import cn.itscloudy.joybox.util.JoyDimension;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-public class Sudoku {
+public class Sudoku extends JoyBoxStuffVBox {
     static final int BINGO = 511;
+    private final ChessBoard chessboard;
 
-    private Sudoku() {
-    }
+    public Sudoku(Runnable onClose) {
+        super(onClose);
+        chessboard = new ChessBoard();
 
-    public static Scene show(Runnable onClose) {
-        Button closeButton = new Button("←");
-        closeButton.setOnAction(e -> onClose.run());
-        HBox controls = new HBox(closeButton);
+        Region region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS);
+        HBox controls = new HBox(closeButton, region);
+
+        for (DifficultyLevel value : DifficultyLevel.values()) {
+            Button dlButton = new Button(value.getDisplay());
+            dlButton.setOnAction(e -> {
+                chessboard.setDifficultyLevel(value);
+                chessboard.prepareNewQuiz();
+            });
+            controls.getChildren().add(dlButton);
+        }
 
         HBox splitter = new HBox(10);
-        ChessBoard chessboard = new ChessBoard();
 
         HBox candidates = new HBox();
         for (int i = 0; i < 9; i++) {
@@ -28,11 +35,17 @@ public class Sudoku {
             candidates.getChildren().add(candidate);
         }
 
-        VBox root = new VBox(controls, splitter, chessboard, candidates);
-        root.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
-
-        chessboard.prepareNewQuiz();
-        return new Scene(root, 280, root.getPrefHeight(), Color.TRANSPARENT);
+        addAll(controls, splitter, chessboard, candidates);
+        setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
     }
 
+    @Override
+    protected JoyDimension getJoyDimension() {
+        return new JoyDimension(280, getPrefHeight());
+    }
+
+    @Override
+    public void afterSeen() {
+        chessboard.prepareNewQuiz();
+    }
 }

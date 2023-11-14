@@ -4,15 +4,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 class Cell extends Label {
     static final int SIDE_LEN = 30;
     private CellValue preparedValue;
     private CellValue filledValue;
     private boolean fixed;
-    private static final Border EDITING_BORDER = new Border(new BorderStroke(Paint
-            .valueOf("linear-gradient(from 0% 0% to 100% 100%, red  0% , blue 30%,  black 100%)"),
+    private static final Border EDITING_BORDER = new Border(new BorderStroke(Color.DARKBLUE,
             BorderStrokeStyle.SOLID, null, null));
 
     final Group col;
@@ -44,7 +42,7 @@ class Cell extends Label {
         setNoBorder();
     }
 
-    void markFixed() {
+    void fix() {
         this.fixed = true;
         setTextFill(Color.GRAY);
         setText(preparedValue.display);
@@ -57,11 +55,12 @@ class Cell extends Label {
         setTextFill(Color.LIGHTCYAN);
         setText(filledValue.display);
         if (lastFillValue != null) {
-            col.getFillingRecord().removeValue(lastFillValue);
-            row.getFillingRecord().removeValue(lastFillValue);
-            circle.getFillingRecord().removeValue(lastFillValue);
+            col.recalculateFillingRecord();
+            row.recalculateFillingRecord();
+            circle.recalculateFillingRecord();
+        } else {
+            fillGroup(filledValue);
         }
-        fillGroup(filledValue);
     }
 
     private void fillGroup(CellValue filledValue) {
@@ -70,20 +69,28 @@ class Cell extends Label {
         circle.getFillingRecord().addValue(filledValue);
     }
 
-    void prepareValue(CellValue actualValue) {
-        this.preparedValue = actualValue;
-        col.getPrepRecord().addValue(actualValue);
-        row.getPrepRecord().addValue(actualValue);
-        circle.getPrepRecord().addValue(actualValue);
+    void prepareValue(CellValue prepValue) {
+        this.preparedValue = prepValue;
+        col.getPrepRecord().addValue(prepValue);
+        row.getPrepRecord().addValue(prepValue);
+        circle.getPrepRecord().addValue(prepValue);
     }
 
-    public void setNoBorder() {
+    void setNoBorder() {
         setBorder(null);
     }
 
-    public boolean groupPrepContains(CellValue cellValue) {
+    boolean groupPrepContains(CellValue cellValue) {
         return col.getPrepRecord().contains(cellValue)
                 || row.getPrepRecord().contains(cellValue)
                 || circle.getPrepRecord().contains(cellValue);
+    }
+
+    CellValue getDisplayingValue() {
+        if (fixed) {
+            return preparedValue;
+        } else {
+            return filledValue;
+        }
     }
 }

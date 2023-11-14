@@ -30,12 +30,17 @@ public class JoyBox extends Application {
         closeButton.setOnAction(e -> System.exit(0));
         HBox controlsFloor = new HBox(titleLabel, region, closeButton);
 
-        Button sudoku = new Button("Sudoku");
-        sudoku.setOnAction(e -> setScene(Sudoku.show(() -> setScene(primaryScene))));
+        Button sudokuButton = new Button("Sudoku");
+        Runnable stuffClosingAction = () -> setScene(primaryScene);
+        sudokuButton.setOnAction(e -> {
+            Sudoku sudoku = new Sudoku(stuffClosingAction);
+            setScene(sudoku.toScene());
+            sudoku.afterSeen();
+        });
 
         VBox vb = new VBox();
         vb.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
-        vb.getChildren().addAll(controlsFloor, sudoku);
+        vb.getChildren().addAll(controlsFloor, sudokuButton);
 
         this.primaryScene = new Scene(vb, 300, 250, Color.TRANSPARENT);
         setScene(primaryScene);

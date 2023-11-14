@@ -15,6 +15,7 @@ class ChessBoard extends GridPane {
     private final Cell[] cells = new Cell[81];
     private final List<Integer> cellIndic = new ArrayList<>();
     private Cell editing;
+    private DifficultyLevel difficultyLevel = DifficultyLevel.EASY;
 
     ChessBoard() {
         setPrefSize(280, 280);
@@ -40,6 +41,10 @@ class ChessBoard extends GridPane {
                 Group circle = groups[cir + 18];
 
                 Cell cell = new Cell(this, col, row, circle);
+                col.addCell(cell);
+                row.addCell(cell);
+                circle.addCell(cell);
+
                 add(cell, c, r);
                 cells[k++] = cell;
             }
@@ -51,6 +56,10 @@ class ChessBoard extends GridPane {
                 fillCellValue(CellValue.values()[char0 - '0']);
             }
         });
+    }
+
+    void setDifficultyLevel(DifficultyLevel difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
     }
 
     void prepareNewQuiz() {
@@ -73,8 +82,9 @@ class ChessBoard extends GridPane {
         }
 
         Collections.shuffle(cellIndic);
-        for (int i = 0; i < 40; i++) {
-            cells[cellIndic.get(i)].markFixed();
+        for (int i = 0; i < difficultyLevel.getFixCells(); i++) {
+            Integer i1 = cellIndic.get(i);
+            cells[i1].fix();
         }
     }
 

@@ -11,10 +11,6 @@ class GroupRecord {
         appearances |= v.flagValue;
     }
 
-    void removeValue(CellValue v) {
-        appearances = appearances & ~v.flagValue;
-    }
-
     boolean contains(CellValue v) {
         return (appearances & v.flagValue) == v.flagValue;
     }
