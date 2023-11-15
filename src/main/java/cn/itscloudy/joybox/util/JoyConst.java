@@ -1,13 +1,13 @@
-package cn.itscloudy.joybox.common;
+package cn.itscloudy.joybox.util;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 import java.util.Locale;
 
-public class JoyConfig {
+public class JoyConst {
 
-    private JoyConfig() {
+    private JoyConst() {
     }
 
     public static final Paint SCENE_BG;

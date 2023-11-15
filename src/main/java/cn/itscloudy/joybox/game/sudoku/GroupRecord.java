@@ -18,4 +18,8 @@ class GroupRecord {
     boolean notBingo() {
         return appearances != Sudoku.BINGO;
     }
+
+    int getAppearances() {
+        return appearances;
+    }
 }

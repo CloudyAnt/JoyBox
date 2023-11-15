@@ -1,5 +1,7 @@
 package cn.itscloudy.joybox.game.sudoku;
 
+import cn.itscloudy.joybox.util.log.LogType;
+import cn.itscloudy.joybox.util.log.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -11,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 class ChessBoard extends GridPane {
+    public static final Logger LOGGER = LogType.SUDOKU.getLogger();
     private final Group[] groups = new Group[27];
     private final Cell[] cells = new Cell[81];
     private final List<Integer> cellIndic = new ArrayList<>();
@@ -22,7 +25,6 @@ class ChessBoard extends GridPane {
         setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
         setVgap(1);
         setHgap(1);
-
 
         for (int i = 0; i < 81; i++) {
             cellIndic.add(i);
@@ -71,15 +73,46 @@ class ChessBoard extends GridPane {
         }
         editing = null;
 
-        List<CellValue> randomOrderValues = CellValue.getRandomList();
-        int vi = 0;
-        for (Cell cell : cells) {
-            CellValue cellValue;
+        int badTimes = 0;
+        for (int i = 0; i < 9; i++) {
+            Group col = groups[i];
+            Cell[] colCells = col.getCells();
+            boolean badValues = false;
             do {
-                cellValue = randomOrderValues.get(vi++ % 9);
-            } while (cell.groupPrepContains(cellValue));
-            cell.prepareValue(cellValue);
+                if (badTimes > 100) {
+                    LOGGER.error("bad times exceed 100, please reset");
+                    break;
+                }
+                int vi = 0;
+                List<CellValue> valuesList = CellValue.getRandomList();
+                for (int j = 0; j < colCells.length; j++) {
+                    Cell cell = colCells[j];
+                    int vc = 0;
+                    CellValue cellValue;
+                    do {
+                        vc++;
+                        cellValue = valuesList.get(vi++ % 9);
+                    } while (cell.groupPrepContains(cellValue) && vc <= 9);
+
+                    if (vc == 10) {
+                        // all 9 value cannot be used
+                        badTimes++;
+                        badValues = true;
+                        for (int jj = 0; jj < j; jj++) {
+                            colCells[jj].reset();
+                        }
+                        for (Group group : groups) {
+                            group.recalculatePrepRecord();
+                        }
+                        break;
+                    }
+                    cell.prepareValue(cellValue);
+                    badValues = false;
+                }
+            } while (badValues);
         }
+
+        LogType.SUDOKU.getLogger().info("Sudoku prepared, met bad times: " + badTimes);
 
         Collections.shuffle(cellIndic);
         for (int i = 0; i < difficultyLevel.getFixCells(); i++) {

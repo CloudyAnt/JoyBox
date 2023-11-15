@@ -1,6 +1,5 @@
 package cn.itscloudy.joybox.util;
 
-import cn.itscloudy.joybox.common.JoyConfig;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,7 +22,7 @@ public abstract class JoyBoxStuffVBox extends VBox {
 
     public Scene toScene() {
         JoyDimension joyDimension = getJoyDimension();
-        return new Scene(this, joyDimension.width(), joyDimension.height(), JoyConfig.SCENE_BG);
+        return new Scene(this, joyDimension.width(), joyDimension.height(), JoyConst.SCENE_BG);
     }
 
     protected abstract JoyDimension getJoyDimension();

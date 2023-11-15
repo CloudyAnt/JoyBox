@@ -93,4 +93,8 @@ class Cell extends Label {
             return filledValue;
         }
     }
+
+    CellValue getPreparedValue() {
+        return preparedValue;
+    }
 }

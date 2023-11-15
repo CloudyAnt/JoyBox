@@ -38,4 +38,19 @@ class Group {
             }
         }
     }
+
+    void recalculatePrepRecord() {
+        prepRecord.reset();
+        for (Cell cell : cells) {
+            CellValue preparedValue = cell.getPreparedValue();
+            if (preparedValue != null) {
+                prepRecord.addValue(preparedValue);
+            }
+        }
+
+    }
+
+    Cell[] getCells() {
+        return cells;
+    }
 }

@@ -1,5 +1,6 @@
 package cn.itscloudy.joybox;
 
+import cn.itscloudy.joybox.util.JoyConst;
 import cn.itscloudy.joybox.game.sudoku.Sudoku;
 import cn.itscloudy.joybox.util.Draggable;
 import javafx.application.Application;
@@ -42,7 +43,7 @@ public class JoyBox extends Application {
         vb.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
         vb.getChildren().addAll(controlsFloor, sudokuButton);
 
-        this.primaryScene = new Scene(vb, 300, 250, Color.TRANSPARENT);
+        this.primaryScene = new Scene(vb, 300, 250, JoyConst.SCENE_BG);
         setScene(primaryScene);
         primaryStage.setTitle("JoyBox");
         primaryStage.show();
