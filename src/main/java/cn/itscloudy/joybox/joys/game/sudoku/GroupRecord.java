@@ -1,4 +1,4 @@
-package cn.itscloudy.joybox.game.sudoku;
+package cn.itscloudy.joybox.joys.game.sudoku;
 
 class GroupRecord {
     private int appearances;

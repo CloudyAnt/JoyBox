@@ -1,4 +1,4 @@
-package cn.itscloudy.joybox.util.log;
+package cn.itscloudy.joybox.log;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,12 +15,12 @@ public class Logger {
         return LocalDateTime.now().format(DTF) + " [" + logType + "]: ";
     }
 
-    public void info(String info) {
-        System.out.println(prefix() + info);
+    public void info(String info, Object... params) {
+        System.out.printf(prefix() + info + "\n", params);
     }
 
-    public void error(String err) {
-        System.err.println(prefix() + err);
+    public void error(String err, Object... params) {
+        System.err.printf(prefix() + err + "\n", params);
     }
 
 }

@@ -1,8 +1,9 @@
-package cn.itscloudy.joybox.util.log;
+package cn.itscloudy.joybox.log;
 
 public enum LogType {
     APP,
-    SUDOKU;
+    SUDOKU,
+    MINESWEEPER;
 
     private final Logger logger;
     LogType() {

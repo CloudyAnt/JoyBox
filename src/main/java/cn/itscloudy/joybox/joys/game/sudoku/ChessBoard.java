@@ -1,30 +1,35 @@
-package cn.itscloudy.joybox.game.sudoku;
+package cn.itscloudy.joybox.joys.game.sudoku;
 
-import cn.itscloudy.joybox.util.log.LogType;
-import cn.itscloudy.joybox.util.log.Logger;
+import cn.itscloudy.joybox.joys.game.GameHost;
+import cn.itscloudy.joybox.log.LogType;
+import cn.itscloudy.joybox.log.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class ChessBoard extends GridPane {
-    public static final Logger LOGGER = LogType.SUDOKU.getLogger();
+class ChessBoard extends GridPane implements GameHost {
+    private static final Logger LOGGER = LogType.SUDOKU.getLogger();
     private final Group[] groups = new Group[27];
     private final Cell[] cells = new Cell[81];
     private final List<Integer> cellIndic = new ArrayList<>();
+    private final Sudoku sudoku;
     private Cell editing;
     private DifficultyLevel difficultyLevel = DifficultyLevel.EASY;
 
-    ChessBoard() {
-        setPrefSize(280, 280);
+    ChessBoard(Sudoku sudoku) {
+        this.sudoku = sudoku;
         setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
         setVgap(1);
         setHgap(1);
+        setPrefSize(Sudoku.CELL_SIDE_LEN * 9 + getHgap() * 10,
+                Sudoku.CELL_SIDE_LEN * 9 + getVgap() * 10);
 
         for (int i = 0; i < 81; i++) {
             cellIndic.add(i);
@@ -80,7 +85,7 @@ class ChessBoard extends GridPane {
             boolean badValues = false;
             do {
                 if (badTimes > 100) {
-                    LOGGER.error("bad times exceed 100, please reset");
+                    LOGGER.error("bad value times exceed 100, please reset");
                     break;
                 }
                 int vi = 0;
@@ -112,10 +117,10 @@ class ChessBoard extends GridPane {
             } while (badValues);
         }
 
-        LogType.SUDOKU.getLogger().info("Sudoku prepared, met bad times: " + badTimes);
+        LogType.SUDOKU.getLogger().info("%s level prepared, bad value times: %d", difficultyLevel,  badTimes);
 
         Collections.shuffle(cellIndic);
-        for (int i = 0; i < difficultyLevel.getFixCells(); i++) {
+        for (int i = 0; i < difficultyLevel.fixCells; i++) {
             Integer i1 = cellIndic.get(i);
             cells[i1].fix();
         }
@@ -127,15 +132,7 @@ class ChessBoard extends GridPane {
                 return;
             }
         }
-        bingo();
-    }
-
-    void bingo() {
-        Alert sayYee = new Alert(Alert.AlertType.INFORMATION);
-        sayYee.setTitle("Yee! Bingo");
-        sayYee.setContentText("You solved this quiz");
-        sayYee.setHeaderText(null);
-        sayYee.showAndWait();
+        showSuccessAlert("Yee! Bingo", "You solved this quiz");
     }
 
     void setEditing(Cell editing) {
@@ -152,5 +149,10 @@ class ChessBoard extends GridPane {
             editing.fillValue(cellValue);
             checkBingo();
         }
+    }
+
+    @Override
+    public Stage getOwner() {
+        return sudoku.toStage();
     }
 }

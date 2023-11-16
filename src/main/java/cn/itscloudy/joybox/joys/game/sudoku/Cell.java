@@ -1,4 +1,4 @@
-package cn.itscloudy.joybox.game.sudoku;
+package cn.itscloudy.joybox.joys.game.sudoku;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -6,7 +6,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 class Cell extends Label {
-    static final int SIDE_LEN = 30;
     private CellValue preparedValue;
     private CellValue filledValue;
     private boolean fixed;
@@ -22,7 +21,7 @@ class Cell extends Label {
         this.circle = circle;
 
         setAlignment(Pos.CENTER);
-        setPrefSize(SIDE_LEN, SIDE_LEN);
+        setPrefSize(Sudoku.CELL_SIDE_LEN, Sudoku.CELL_SIDE_LEN);
         setBackground(new Background(new BackgroundFill(new Color(0, 0, 0, .1),
                 null, null)));
         setOnMouseClicked(e -> {

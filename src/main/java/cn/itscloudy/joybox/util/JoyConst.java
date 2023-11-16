@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 import java.util.Locale;
+import java.util.Random;
 
 public class JoyConst {
 
@@ -19,4 +20,6 @@ public class JoyConst {
             SCENE_BG = Color.TRANSPARENT;
         }
     }
+
+    public static final Random RANDOM = new Random();
 }
