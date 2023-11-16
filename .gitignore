@@ -3,6 +3,7 @@
 !gradle
 !src
 !.gitignore
+!.gctpattern
 !build.gradle
 !gradlew
 !gradlew.bat
