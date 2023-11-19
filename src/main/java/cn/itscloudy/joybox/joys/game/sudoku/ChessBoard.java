@@ -3,7 +3,6 @@ package cn.itscloudy.joybox.joys.game.sudoku;
 import cn.itscloudy.joybox.joys.game.GameHost;
 import cn.itscloudy.joybox.log.LogType;
 import cn.itscloudy.joybox.log.Logger;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
@@ -132,7 +131,7 @@ class ChessBoard extends GridPane implements GameHost {
                 return;
             }
         }
-        showSuccessAlert("Yee! Bingo", "You solved this quiz");
+        showAlert("Yee! Bingo", "You solved this quiz");
     }
 
     void setEditing(Cell editing) {
@@ -152,7 +151,7 @@ class ChessBoard extends GridPane implements GameHost {
     }
 
     @Override
-    public Stage getOwner() {
-        return sudoku.toStage();
+    public Stage getOwnerStage() {
+        return sudoku.getStage();
     }
 }

@@ -1,6 +1,7 @@
 package cn.itscloudy.joybox;
 
 import cn.itscloudy.joybox.joys.Joy;
+import cn.itscloudy.joybox.joys.JoyEntrance;
 import cn.itscloudy.joybox.joys.Joys;
 import cn.itscloudy.joybox.util.Draggable;
 import cn.itscloudy.joybox.util.JoyConst;
@@ -21,7 +22,7 @@ public class JoyBox extends Application {
     private Stage joyStage;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
@@ -35,12 +36,12 @@ public class JoyBox extends Application {
         HBox controlsFloor = new HBox(titleLabel, region, closeButton);
 
         Runnable joyClosingAction = this::returnToPrimary;
-        List<Joy> joys = Joys.getAllJoys(joyClosingAction);
-        Button[] joyEntrances = new Button[joys.size()];
-        for (int i = 0; i < joys.size(); i++) {
-            Joy joy = joys.get(i);
+        List<JoyEntrance<?>> entrances = Joys.getAllJoys(joyClosingAction);
+        Button[] joyEntrances = new Button[entrances.size()];
+        for (int i = 0; i < entrances.size(); i++) {
+            JoyEntrance<?> joy = entrances.get(i);
             joyEntrances[i] = joy.getDefaultEntrance();
-            joyEntrances[i].setOnAction(e -> takeJoy(joy));
+            joyEntrances[i].setOnAction(e -> takeJoy(joy.getJoy()));
         }
 
         VBox vb = new VBox();
@@ -57,7 +58,7 @@ public class JoyBox extends Application {
 
     void takeJoy(Joy joy) {
         joy.beforeTaken();
-        this.joyStage = joy.toStage();
+        this.joyStage = joy.getStage();
         joyStage.setX(primaryStage.getX());
         joyStage.setY(primaryStage.getY());
         joyStage.show();

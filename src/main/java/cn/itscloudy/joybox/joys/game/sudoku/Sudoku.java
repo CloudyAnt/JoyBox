@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class Sudoku extends VBoxJoy {
+    public static final String NAME = "Sudoku";
     static final int BINGO = 511;
     static final int CELL_SIDE_LEN = 30;
     private final ChessBoard chessboard;
@@ -39,8 +40,4 @@ public class Sudoku extends VBoxJoy {
         chessboard.prepareNewQuiz();
     }
 
-    @Override
-    public String getDisplay() {
-        return "Sudoku";
-    }
 }

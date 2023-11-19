@@ -12,7 +12,7 @@ public class Logger {
     }
 
     private String prefix() {
-        return LocalDateTime.now().format(DTF) + " [" + logType + "]: ";
+        return LocalDateTime.now().format(DTF) + " [" + logType.getDisplayName() + "]: ";
     }
 
     public void info(String info, Object... params) {

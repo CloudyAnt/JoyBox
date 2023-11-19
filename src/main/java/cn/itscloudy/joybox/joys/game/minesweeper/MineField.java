@@ -134,7 +134,7 @@ class MineField extends GridPane implements GameHost {
         state = State.FINISHED;
 
         if (success) {
-            showSuccessAlert("Good job!", "You sweep out all mines");
+            showAlert("Good job!", "You sweep out all mines");
         }
     }
 
@@ -217,8 +217,8 @@ class MineField extends GridPane implements GameHost {
     }
 
     @Override
-    public Stage getOwner() {
-        return mineSweeper.toStage();
+    public Stage getOwnerStage() {
+        return mineSweeper.getStage();
     }
 
     enum State {

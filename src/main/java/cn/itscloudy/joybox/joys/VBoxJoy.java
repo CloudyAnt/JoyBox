@@ -18,7 +18,7 @@ public abstract class VBoxJoy extends VBox implements Joy {
     private Button closeButton;
     private HBox controls;
 
-    public VBoxJoy(Runnable onClose) {
+    protected VBoxJoy(Runnable onClose) {
         this.onClose = onClose;
         setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
     }
@@ -39,7 +39,7 @@ public abstract class VBoxJoy extends VBox implements Joy {
         return closeButton;
     }
 
-    public Stage toStage() {
+    public Stage getStage() {
         if (stage == null) {
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
@@ -54,10 +54,8 @@ public abstract class VBoxJoy extends VBox implements Joy {
     }
 
     protected void updateSize() {
-        JoyDimension joyDimension = getJoyDimension();
-        Stage stage = toStage();
-        stage.setWidth(joyDimension.width());
-        stage.setHeight(joyDimension.height());
+        Stage stage = getStage();
+        stage.sizeToScene();
     }
 
     protected JoyDimension getJoyDimension() {
@@ -69,8 +67,6 @@ public abstract class VBoxJoy extends VBox implements Joy {
 
     public void afterTaken() {
     }
-
-    public abstract String getDisplay();
 
     protected void addAll(Node... nodes) {
         for (Node node : nodes) {
