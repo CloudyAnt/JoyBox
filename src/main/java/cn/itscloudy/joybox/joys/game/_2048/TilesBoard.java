@@ -17,6 +17,8 @@ class TilesBoard extends GridPane implements GameHost {
     private final Tile[][] tiles;
     private Tile lastTilePlaceNumber;
     private int emptyTilesNum = 0;
+    private boolean finished = false;
+    private int maxCombination = 0;
 
     private static final Border NEW_VALUE_TILE_BORDER = new Border(new BorderStroke(Color.DARKBLUE,
             BorderStrokeStyle.SOLID, null, null));
@@ -53,6 +55,8 @@ class TilesBoard extends GridPane implements GameHost {
             }
         }
         emptyTilesNum = boardSize.tilesNem;
+        maxCombination = 0;
+        finished = false;
         if (lastTilePlaceNumber != null) {
             lastTilePlaceNumber.setBorder(null);
             lastTilePlaceNumber = null;
@@ -61,7 +65,7 @@ class TilesBoard extends GridPane implements GameHost {
     }
 
     void slide(SlideDirection direction) {
-        if (emptyTilesNum == 0) {
+        if (finished) {
             return;
         }
 
@@ -75,12 +79,12 @@ class TilesBoard extends GridPane implements GameHost {
         } while (lineInit != null);
 
         placeNewNumber();
-        if (emptyTilesNum == 0) {
-            showAlert("e...", "no more possibility");
-        }
     }
 
     void placeNewNumber() {
+        if (emptyTilesNum == 0) {
+            return;
+        }
         if (lastTilePlaceNumber != null) {
             lastTilePlaceNumber.setBorder(null);
         }
@@ -99,6 +103,7 @@ class TilesBoard extends GridPane implements GameHost {
         chosen.setBorder(NEW_VALUE_TILE_BORDER);
         lastTilePlaceNumber = chosen;
         emptyTilesNum--;
+        finishingCheck();
     }
 
     void throughLine(Tile tile, Function<Tile, Tile> nextGetter) {
@@ -116,11 +121,41 @@ class TilesBoard extends GridPane implements GameHost {
 
         if (tile.number == next.number) {
             tile.upgrade();
-            emptyTilesNum++;
+            if (tile.number > maxCombination) {
+                maxCombination = tile.number;
+            }
             next.clear();
+            emptyTilesNum++;
         }
 
         throughLine(next, nextGetter);
+    }
+
+    private void finishingCheck() {
+        if (emptyTilesNum != 0) {
+            return;
+        }
+
+        // check rows
+        for (Tile[] row : tiles) {
+            for (int i = 0; i < row.length - 1; i++) {
+                if (row[i].number == row[i + 1].number) {
+                    return;
+                }
+            }
+        }
+
+        // check cols
+        for (int i = 0; i < boardSize.colsNum; i++) {
+            for (int j = 0; j < boardSize.rowsNum - 1; j++) {
+                if (tiles[j][i].number == tiles[j + 1][i].number) {
+                    return;
+                }
+            }
+        }
+
+        finished = true;
+        showAlert("No more possibilities", "Max combination: " + maxCombination);
     }
 
     boolean invertSwapNextNon0Tile(Tile current, Function<Tile, Tile> nextGetter) {

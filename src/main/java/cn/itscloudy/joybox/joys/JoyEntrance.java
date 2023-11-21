@@ -1,5 +1,6 @@
 package cn.itscloudy.joybox.joys;
 
+import cn.itscloudy.joybox.util.JoyButton;
 import javafx.scene.control.Button;
 
 import java.util.function.Supplier;
@@ -22,6 +23,6 @@ public class JoyEntrance<J extends Joy> {
     }
 
     public Button getDefaultEntrance() {
-        return new Button(name);
+        return new JoyButton(name);
     }
 }

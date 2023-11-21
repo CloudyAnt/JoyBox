@@ -1,6 +1,7 @@
 package cn.itscloudy.joybox.joys;
 
 import cn.itscloudy.joybox.util.Draggable;
+import cn.itscloudy.joybox.util.JoyButton;
 import cn.itscloudy.joybox.util.JoyConst;
 import cn.itscloudy.joybox.util.JoyDimension;
 import javafx.scene.Node;
@@ -33,7 +34,7 @@ public abstract class VBoxJoy extends VBox implements Joy {
     }
     private Button getCloseButton() {
         if (closeButton == null) {
-            closeButton = new Button("←");
+            closeButton = new JoyButton("←");
             closeButton.setOnAction(e -> onClose.run());
         }
         return closeButton;

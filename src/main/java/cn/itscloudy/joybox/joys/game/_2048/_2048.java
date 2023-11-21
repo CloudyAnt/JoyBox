@@ -1,6 +1,7 @@
 package cn.itscloudy.joybox.joys.game._2048;
 
 import cn.itscloudy.joybox.joys.VBoxJoy;
+import cn.itscloudy.joybox.util.JoyButton;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -37,13 +38,13 @@ public class _2048 extends VBoxJoy {
         getChildren().add(central);
         setAndClearBoard(def.board);
 
-        Button slideLeft = new Button("←");
+        Button slideLeft = new JoyButton("←");
         slideLeft.setOnAction(e -> board.slide(SlideDirection.LEFT));
-        Button slideRight = new Button("→");
+        Button slideRight = new JoyButton("→");
         slideRight.setOnAction(e -> board.slide(SlideDirection.RIGHT));
-        Button slideUp = new Button("↑");
+        Button slideUp = new JoyButton("↑");
         slideUp.setOnAction(e -> board.slide(SlideDirection.UP));
-        Button slideDown = new Button("↓");
+        Button slideDown = new JoyButton("↓");
         slideDown.setOnAction(e -> board.slide(SlideDirection.DOWN));
 
         HBox leftRightBox = new HBox();
@@ -70,13 +71,13 @@ public class _2048 extends VBoxJoy {
         board.prepare();
     }
 
-    private class BoardButton extends Button {
+    private class BoardButton extends JoyButton {
 
         private final TilesBoard board;
 
         private BoardButton(BoardSize size) {
+            super(size.colsNum + "×" + size.rowsNum);
             this.board = new TilesBoard(_2048.this, size);
-            setText(size.colsNum + "×" + size.rowsNum);
             setOnAction(e -> {
                 setAndClearBoard(board);
                 updateSize();

@@ -4,6 +4,7 @@ import cn.itscloudy.joybox.joys.Joy;
 import cn.itscloudy.joybox.joys.JoyEntrance;
 import cn.itscloudy.joybox.joys.Joys;
 import cn.itscloudy.joybox.util.Draggable;
+import cn.itscloudy.joybox.util.JoyButton;
 import cn.itscloudy.joybox.util.JoyConst;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -28,7 +29,7 @@ public class JoyBox extends Application {
 
         Label titleLabel = new Label("JoyBox");
         titleLabel.setTextFill(Color.BLUE);
-        Button closeButton = new Button("X");
+        Button closeButton = new JoyButton("X");
         Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
 
