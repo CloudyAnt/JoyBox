@@ -85,7 +85,7 @@ class ChessBoard extends GridPane implements GameHost {
             do {
                 if (badTimes > 100) {
                     LOGGER.error("bad value times exceed 100, please reset");
-                    break;
+                    return;
                 }
                 int vi = 0;
                 List<CellValue> valuesList = CellValue.getRandomList();
