@@ -48,10 +48,14 @@ public abstract class VBoxJoy extends VBox implements Joy {
             JoyDimension dimension = getJoyDimension();
             Scene scene = new Scene(this, dimension.width(), dimension.height(), JoyConst.SCENE_BG);
             stage.setScene(scene);
-            new Draggable(stage, scene);
+            new Draggable(stage, getDraggingNode());
             this.stage = stage;
         }
         return stage;
+    }
+
+    protected Node getDraggingNode() {
+        return getControls();
     }
 
     protected void updateSize() {
