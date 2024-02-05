@@ -10,7 +10,7 @@ Write-Output "module java {
     exports cn.itscloudy.joybox;
 }" > $moduleInfo
 
-$fxhome=$env:JAVAFX_HOME
+$fxlibs=$env:JAVAFX_LIBS
 $sp="src/main"
 $out="mods/out"
 

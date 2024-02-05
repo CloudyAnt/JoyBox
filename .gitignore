@@ -10,3 +10,4 @@
 !settings.gradle
 !README.md
 !buildNative.ps1
+!buildNative.sh
