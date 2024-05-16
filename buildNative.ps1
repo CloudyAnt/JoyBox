@@ -15,7 +15,7 @@ $sp="src/main"
 $out="mods/out"
 
 # build
-javac -d $out --module-path $fxhome `
+javac -d $out --module-path $fxlibs `
 --module-source-path $sp $(Get-ChildItem -Path $sp -Filter *.java -Recurse -Name | ForEach-Object{"$sp/$_"})
 Remove-Item $moduleInfo 2>$null
 
@@ -25,7 +25,7 @@ jar --create --file $arc/java.jar --module-version=1.0 -C $out/java .
 
 # run with agentlib
 $cfg="mods/cfg"
-$modulePath="$fxhome/javafx.base.jar;$fxhome/javafx.controls.jar;$fxhome/javafx.graphics.jar;$arc/java.jar"
+$modulePath="$fxlibs/javafx.base.jar;$fxlibs/javafx.controls.jar;$fxlibs/javafx.graphics.jar;$arc/java.jar"
 java -agentlib:native-image-agent=config-output-dir=$cfg `
 --module-path $modulePath `
 -m java/cn.itscloudy.joybox.JoyBox
