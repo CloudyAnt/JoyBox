@@ -134,7 +134,7 @@ class ChessBoard extends GridPane implements GameHost {
         showAlert("Yee! Bingo", "You solved this quiz");
     }
 
-    void setEditing(Cell editing) {
+    void setEditingCell(Cell editing) {
         if (this.editing == editing) {
             return;
         } else if (this.editing != null) {

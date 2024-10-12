@@ -2,6 +2,7 @@ package cn.itscloudy.joybox.joys.game.sudoku;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -26,10 +27,13 @@ class Cell extends Label {
                 null, null)));
         setOnMouseClicked(e -> {
             if (fixed) {
-                board.setEditing(null);
+                board.setEditingCell(null);
             } else {
-                board.setEditing(this);
+                board.setEditingCell(this);
                 setBorder(EDITING_BORDER);
+                if (e.getButton() == MouseButton.SECONDARY) {
+                    setText("");
+                }
             }
         });
     }
