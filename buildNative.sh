@@ -9,7 +9,7 @@ echo "module java {
     exports cn.itscloudy.joybox;
 }" > $moduleInfo
 
-fxlibs=$JAVAFX_LIBS
+fxlibs=$JAVAFX_LIB_PATH
 sp="src/main"
 out="mods/out"
 
