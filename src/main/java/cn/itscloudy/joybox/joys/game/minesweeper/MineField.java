@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -86,26 +87,28 @@ class MineField extends GridPane implements GameHost {
         laidMinesCount = 0;
         leftCellsCount = level.totalCells;
 
-        badRandomTimes = 0;
-        layNextMine();
-        LOGGER.info("%s level mines laid. bad random times: %d", level, badRandomTimes);
-    }
-
-    private void layNextMine() {
-        if (laidMinesCount == level.minesNum) {
-            return;
-        } else {
-            int row = JoyConst.RANDOM.nextInt(level.rowsNum);
-            int col = JoyConst.RANDOM.nextInt(level.colsNum);
+        List<Integer> indices = getShuffledIndices();
+        for (Integer i : indices) {
+            int row = i / level.colsNum;
+            int col = i % level.colsNum;
             Cell cell = getCell(row, col);
-            if (!cell.hasMine() && !cell.isStarter()) {
+            if (!cell.isStarter()) {
                 cell.layMine();
                 laidMinesCount++;
-            } else {
-                badRandomTimes++;
+            }
+            if (laidMinesCount == level.minesNum) {
+                break;
             }
         }
-        layNextMine();
+    }
+
+    private List<Integer> getShuffledIndices() {
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < level.totalCells; i++) {
+            indices.add(i);
+        }
+        Collections.shuffle(indices, JoyConst.RANDOM);
+        return indices;
     }
 
     Cell getCell(int row, int col) {
