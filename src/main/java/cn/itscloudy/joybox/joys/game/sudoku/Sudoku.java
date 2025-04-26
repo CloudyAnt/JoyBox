@@ -11,8 +11,7 @@ public class Sudoku extends VBoxJoy {
     static final int CELL_SIDE_LEN = 30;
     private final ChessBoard chessboard;
 
-    public Sudoku(Runnable onClose) {
-        super(onClose);
+    public Sudoku() {
         chessboard = new ChessBoard(this);
 
         HBox controls = getControls();

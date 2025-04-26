@@ -1,16 +1,14 @@
 package cn.itscloudy.joybox.joys.game._2048;
 
-import cn.itscloudy.joybox.joys.game.GameHost;
 import cn.itscloudy.joybox.log.LogType;
 import cn.itscloudy.joybox.log.Logger;
 import cn.itscloudy.joybox.util.JoyConst;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.util.function.Function;
 
-class TilesBoard extends GridPane implements GameHost {
+class TilesBoard extends GridPane {
     private static final Logger LOGGER = LogType._2048.getLogger();
     private final _2048 host;
     private final BoardSize boardSize;
@@ -155,7 +153,7 @@ class TilesBoard extends GridPane implements GameHost {
         }
 
         finished = true;
-        showAlert("No more possibilities", "Max combination: " + maxCombination);
+        host.showAlert("No more possibilities", "Max combination: " + maxCombination);
     }
 
     boolean invertSwapNextNon0Tile(Tile current, Function<Tile, Tile> nextGetter) {
@@ -171,16 +169,10 @@ class TilesBoard extends GridPane implements GameHost {
             return true;
         }
         current.number = next.number;
-        current.level =next.level;
+        current.level = next.level;
         current.reset();
         next.clear();
         return false;
     }
-
-    @Override
-    public Stage getOwnerStage() {
-        return host.getStage();
-    }
-
 
 }

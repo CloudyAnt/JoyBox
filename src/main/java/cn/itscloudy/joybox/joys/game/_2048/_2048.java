@@ -18,9 +18,7 @@ public class _2048 extends VBoxJoy {
     private final HBox central;
     private TilesBoard board;
 
-    public _2048(Runnable onClose) {
-        super(onClose);
-
+    public _2048() {
         BoardSize[] boardSizes = BoardSize.values();
         HBox controls = getControls();
         BoardButton def = null;

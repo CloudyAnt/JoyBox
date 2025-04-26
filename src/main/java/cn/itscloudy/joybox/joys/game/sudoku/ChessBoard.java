@@ -1,19 +1,17 @@
 package cn.itscloudy.joybox.joys.game.sudoku;
 
-import cn.itscloudy.joybox.joys.game.GameHost;
 import cn.itscloudy.joybox.log.LogType;
 import cn.itscloudy.joybox.log.Logger;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class ChessBoard extends GridPane implements GameHost {
+class ChessBoard extends GridPane {
     private static final Logger LOGGER = LogType.SUDOKU.getLogger();
     private final Group[] groups = new Group[27];
     private final Cell[] cells = new Cell[81];
@@ -116,7 +114,7 @@ class ChessBoard extends GridPane implements GameHost {
             } while (badValues);
         }
 
-        LogType.SUDOKU.getLogger().info("%s level prepared, bad value times: %d", difficultyLevel,  badTimes);
+        LogType.SUDOKU.getLogger().info("%s level prepared, bad value times: %d", difficultyLevel, badTimes);
 
         Collections.shuffle(cellIndic);
         for (int i = 0; i < difficultyLevel.fixCells; i++) {
@@ -131,7 +129,7 @@ class ChessBoard extends GridPane implements GameHost {
                 return;
             }
         }
-        showAlert("Yee! Bingo", "You solved this quiz");
+        sudoku.showAlert("Yee! Bingo", "You solved this quiz");
     }
 
     void setEditingCell(Cell editing) {
@@ -148,10 +146,5 @@ class ChessBoard extends GridPane implements GameHost {
             editing.fillValue(cellValue);
             checkBingo();
         }
-    }
-
-    @Override
-    public Stage getOwnerStage() {
-        return sudoku.getStage();
     }
 }

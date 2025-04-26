@@ -21,6 +21,7 @@ public class JoyBox extends Application {
 
     private Stage primaryStage;
     private Stage joyStage;
+    static JoyBox app;
 
     @Override
     public void start(Stage primaryStage) {
@@ -36,8 +37,7 @@ public class JoyBox extends Application {
         closeButton.setOnAction(e -> System.exit(0));
         HBox controlsFloor = new HBox(titleLabel, region, closeButton);
 
-        Runnable joyClosingAction = this::returnToPrimary;
-        List<JoyEntrance<?>> entrances = Joys.getAllJoys(joyClosingAction);
+        List<JoyEntrance<?>> entrances = Joys.getAllJoys();
         Button[] joyEntrances = new Button[entrances.size()];
         for (int i = 0; i < entrances.size(); i++) {
             JoyEntrance<?> joy = entrances.get(i);
@@ -55,6 +55,7 @@ public class JoyBox extends Application {
         new Draggable(this.primaryStage, primaryScene);
         primaryStage.setTitle("JoyBox");
         primaryStage.show();
+        app = this;
     }
 
     void takeJoy(Joy joy) {

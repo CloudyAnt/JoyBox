@@ -1,6 +1,5 @@
 package cn.itscloudy.joybox.joys.game.minesweeper;
 
-import cn.itscloudy.joybox.joys.game.GameHost;
 import cn.itscloudy.joybox.log.LogType;
 import cn.itscloudy.joybox.log.Logger;
 import cn.itscloudy.joybox.util.JoyConst;
@@ -8,14 +7,13 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-class MineField extends GridPane implements GameHost {
+class MineField extends GridPane {
     private static final Logger LOGGER = LogType.MINESWEEPER.getLogger();
     private final List<Cell> availableCells = new ArrayList<>();
     private final MineSweeper mineSweeper;
@@ -137,7 +135,7 @@ class MineField extends GridPane implements GameHost {
         state = State.FINISHED;
 
         if (success) {
-            showAlert("Good job!", "You sweep out all mines");
+            mineSweeper.showAlert("Good job!", "You sweep out all mines");
         }
     }
 
@@ -217,11 +215,6 @@ class MineField extends GridPane implements GameHost {
 
     void minusSignedCellsCount() {
         signedCellsCount += 1;
-    }
-
-    @Override
-    public Stage getOwnerStage() {
-        return mineSweeper.getStage();
     }
 
     enum State {

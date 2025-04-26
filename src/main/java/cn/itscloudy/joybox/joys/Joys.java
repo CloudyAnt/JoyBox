@@ -12,11 +12,11 @@ public class Joys {
     private Joys() {
     }
 
-    public static List<JoyEntrance<?>> getAllJoys(Runnable onClose) {
+    public static List<JoyEntrance<?>> getAllJoys() {
         List<JoyEntrance<?>> entrances = new ArrayList<>();
-        entrances.add(new JoyEntrance<>(Sudoku.NAME, () -> new Sudoku(onClose)));
-        entrances.add(new JoyEntrance<>(MineSweeper.NAME, () -> new MineSweeper(onClose)));
-        entrances.add(new JoyEntrance<>(_2048.NAME, () -> new _2048(onClose)));
+        entrances.add(new JoyEntrance<>(Sudoku.NAME, () -> new Sudoku()));
+        entrances.add(new JoyEntrance<>(MineSweeper.NAME, () -> new MineSweeper()));
+        entrances.add(new JoyEntrance<>(_2048.NAME, () -> new _2048()));
         return entrances;
     }
 }

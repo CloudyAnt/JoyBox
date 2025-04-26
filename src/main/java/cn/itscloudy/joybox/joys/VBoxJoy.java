@@ -1,5 +1,6 @@
 package cn.itscloudy.joybox.joys;
 
+import cn.itscloudy.joybox.AppUtils;
 import cn.itscloudy.joybox.util.Draggable;
 import cn.itscloudy.joybox.util.JoyButton;
 import cn.itscloudy.joybox.util.JoyConst;
@@ -15,12 +16,10 @@ import javafx.stage.StageStyle;
 public abstract class VBoxJoy extends VBox implements Joy {
 
     private Stage stage;
-    private final Runnable onClose;
     private Button closeButton;
     private HBox controls;
 
-    protected VBoxJoy(Runnable onClose) {
-        this.onClose = onClose;
+    protected VBoxJoy() {
         setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
     }
 
@@ -35,7 +34,7 @@ public abstract class VBoxJoy extends VBox implements Joy {
     private Button getCloseButton() {
         if (closeButton == null) {
             closeButton = new JoyButton("←");
-            closeButton.setOnAction(e -> onClose.run());
+            closeButton.setOnAction(e -> AppUtils.returnToPrimary());
         }
         return closeButton;
     }

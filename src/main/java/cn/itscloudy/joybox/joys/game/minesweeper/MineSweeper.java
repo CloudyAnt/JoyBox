@@ -6,12 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class MineSweeper extends VBoxJoy {
-    public static final String NAME = "MineSweeper";
+    public static final String NAME = "Mine Sweeper";
     static final int CELL_SIDE_LEN = 30;
     private final MineField minesField;
 
-    public MineSweeper(Runnable onClose) {
-        super(onClose);
+    public MineSweeper() {
         minesField = new MineField(this);
 
         HBox controls = getControls();
