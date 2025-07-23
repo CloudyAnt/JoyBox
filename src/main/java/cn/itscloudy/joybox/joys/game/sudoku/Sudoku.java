@@ -2,8 +2,12 @@ package cn.itscloudy.joybox.joys.game.sudoku;
 
 import cn.itscloudy.joybox.joys.VBoxJoy;
 import cn.itscloudy.joybox.util.JoyButton;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Sudoku extends VBoxJoy {
     public static final String NAME = "Sudoku";
@@ -13,17 +17,6 @@ public class Sudoku extends VBoxJoy {
 
     public Sudoku() {
         chessboard = new ChessBoard(this);
-
-        HBox controls = getControls();
-        for (DifficultyLevel value : DifficultyLevel.values()) {
-            Button dlButton = new JoyButton(value.display);
-            dlButton.setOnAction(e -> {
-                chessboard.setDifficultyLevel(value);
-                chessboard.prepareNewQuiz();
-            });
-            controls.getChildren().add(dlButton);
-        }
-
         HBox splitter = new HBox(10);
 
         HBox candidates = new HBox();
@@ -32,7 +25,21 @@ public class Sudoku extends VBoxJoy {
             candidates.getChildren().add(candidate);
         }
 
-        addAll(controls, splitter, chessboard, candidates);
+        addAll(splitter, chessboard, candidates);
+    }
+
+    @Override
+    protected List<Node> getRightControlNodes() {
+        ArrayList<Node> controlNodes = new ArrayList<>();
+        for (DifficultyLevel value : DifficultyLevel.values()) {
+            Button dlButton = new JoyButton(value.display);
+            dlButton.setOnAction(e -> {
+                chessboard.setDifficultyLevel(value);
+                chessboard.prepareNewQuiz();
+            });
+            controlNodes.add(dlButton);
+        }
+        return controlNodes;
     }
 
     @Override

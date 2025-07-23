@@ -2,8 +2,11 @@ package cn.itscloudy.joybox.joys.game.minesweeper;
 
 import cn.itscloudy.joybox.joys.VBoxJoy;
 import cn.itscloudy.joybox.util.JoyButton;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MineSweeper extends VBoxJoy {
     public static final String NAME = "Mine Sweeper";
@@ -12,15 +15,18 @@ public class MineSweeper extends VBoxJoy {
 
     public MineSweeper() {
         minesField = new MineField(this);
+        getChildren().add(minesField);
+    }
 
-        HBox controls = getControls();
+    @Override
+    protected List<Node> getRightControlNodes() {
+        List<Node> controlNodes = new ArrayList<>();
         for (Level value : Level.values()) {
             Button lvButton = new JoyButton(value.display);
             lvButton.setOnAction(e -> minesField.setLevelAndPrepare(value));
-            controls.getChildren().add(lvButton);
+            controlNodes.add(lvButton);
         }
-
-        addAll(controls, minesField);
+        return controlNodes;
     }
 
     void afterLevelChanged() {

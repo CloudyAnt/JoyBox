@@ -13,6 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.List;
+
 public abstract class VBoxJoy extends VBox implements Joy {
 
     private Stage stage;
@@ -21,16 +23,23 @@ public abstract class VBoxJoy extends VBox implements Joy {
 
     protected VBoxJoy() {
         setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
+        getChildren().add(getControls());
     }
 
-    protected HBox getControls() {
+    protected abstract List<Node> getRightControlNodes();
+
+    private HBox getControls() {
         if (controls == null) {
             Region region = new Region();
             HBox.setHgrow(region, Priority.ALWAYS);
             controls = new HBox(getCloseButton(), region);
+
+            List<Node> rightControlNodes = getRightControlNodes();
+            controls.getChildren().addAll(rightControlNodes);
         }
         return controls;
     }
+
     private Button getCloseButton() {
         if (closeButton == null) {
             closeButton = new JoyButton("←");

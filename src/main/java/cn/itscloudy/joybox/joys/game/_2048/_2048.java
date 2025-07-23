@@ -11,6 +11,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class _2048 extends VBoxJoy {
     public static final String NAME = "2048";
     static final int TILE_SIDE_LEN = 60;
@@ -19,22 +22,10 @@ public class _2048 extends VBoxJoy {
     private TilesBoard board;
 
     public _2048() {
-        BoardSize[] boardSizes = BoardSize.values();
-        HBox controls = getControls();
-        BoardButton def = null;
-        for (BoardSize boardSize : boardSizes) {
-            BoardButton boardButton = new BoardButton(boardSize);
-            if (def == null) {
-                def = boardButton;
-            }
-            controls.getChildren().add(boardButton);
-        }
-        getChildren().add(controls);
-
-        assert def != null;
+        assert board != null; // init in getRightControlNodes()
         central = new HBox();
         getChildren().add(central);
-        setAndClearBoard(def.board);
+        setAndClearBoard(board);
 
         Button slideLeft = new JoyButton("←");
         slideLeft.setOnAction(e -> board.slide(SlideDirection.LEFT));
@@ -57,6 +48,25 @@ public class _2048 extends VBoxJoy {
         VBox.setVgrow(upDownRegion, Priority.ALWAYS);
         upDownBox.getChildren().addAll(upDownRegion, slideUp, slideDown);
         central.getChildren().add(upDownBox);
+    }
+
+    @Override
+    protected List<Node> getRightControlNodes() {
+        BoardSize[] boardSizes = BoardSize.values();
+        BoardButton def = null;
+
+        List<Node> controlNodes = new ArrayList<>();
+        for (BoardSize boardSize : boardSizes) {
+            BoardButton boardButton = new BoardButton(boardSize);
+            if (def == null) {
+                def = boardButton;
+            }
+            controlNodes.add(boardButton);
+        }
+
+        assert def != null;
+        this.board = def.board;
+        return controlNodes;
     }
 
     private void setAndClearBoard(TilesBoard board) {
