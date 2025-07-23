@@ -2,6 +2,7 @@ package cn.itscloudy.joybox.joys;
 
 import cn.itscloudy.joybox.joys.game._2048._2048;
 import cn.itscloudy.joybox.joys.game.minesweeper.MineSweeper;
+import cn.itscloudy.joybox.joys.game.snake.Snake;
 import cn.itscloudy.joybox.joys.game.sudoku.Sudoku;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Joys {
         entrances.add(new JoyEntrance<>(Sudoku.NAME, () -> new Sudoku()));
         entrances.add(new JoyEntrance<>(MineSweeper.NAME, () -> new MineSweeper()));
         entrances.add(new JoyEntrance<>(_2048.NAME, () -> new _2048()));
+        entrances.add(new JoyEntrance<>(Snake.NAME, () -> new Snake()));
         return entrances;
     }
 }
