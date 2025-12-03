@@ -59,7 +59,7 @@ public class Snake extends VBoxJoy {
     private void initializeGame() {
         gameBoard = new GameBoard(GAME_WIDTH, GAME_HEIGHT);
         
-        gameLoop = new Timeline(new KeyFrame(Duration.millis(200), e -> gameUpdate()));
+        gameLoop = new Timeline(new KeyFrame(Duration.millis(170), e -> gameUpdate()));
         gameLoop.setCycleCount(Animation.INDEFINITE);
     }
     

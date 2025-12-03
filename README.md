@@ -2,7 +2,7 @@
 
 Oh~, h¡! Come have a little fun.
 
-> JAVA 17 required.
+> JAVA 21 required.
 
 ## How to play
 

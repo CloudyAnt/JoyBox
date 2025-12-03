@@ -135,7 +135,7 @@ class MineField extends GridPane {
         state = State.FINISHED;
 
         if (success) {
-            mineSweeper.showAlert("Good job!", "You sweep out all mines");
+            mineSweeper.showAlert("Good job!", "You swept out all mines");
         }
     }
 

@@ -27,7 +27,7 @@ public class GameBoard extends Canvas {
         this.gc = getGraphicsContext2D();
         this.random = new Random();
         
-        gc.setFill(Color.BLACK);
+        gc.setFill(Color.rgb(0, 0, 0, 0.5));
         gc.fillRect(0, 0, width, height);
         
         resetGame();
@@ -125,7 +125,8 @@ public class GameBoard extends Canvas {
     
     private void draw() {
         // Draw background
-        gc.setFill(Color.BLACK);
+        gc.clearRect(0, 0, getWidth(), getHeight());
+        gc.setFill(Color.rgb(0, 0, 0, 0.5));
         gc.fillRect(0, 0, getWidth(), getHeight());
         gc.setStroke(Color.GRAY.darker().darker());
         gc.setLineWidth(0.5);
