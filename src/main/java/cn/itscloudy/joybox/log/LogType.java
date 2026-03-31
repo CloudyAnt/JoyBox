@@ -4,6 +4,7 @@ public enum LogType {
     APP,
     SUDOKU,
     MINESWEEPER,
+    HEXSWEEPER,
     _2048
     ;
 
